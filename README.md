@@ -3,6 +3,8 @@
 This repo contains tutorials and examples to get you up and rolling
 with conducting experiments and sharing results with CodaLab Worksheets.
 
+What problems does CodaLab try to solve? 
+https://www.youtube.com/watch?v=WwFGfgf3-5s
 
 # Overview
 

@@ -11,28 +11,17 @@ We'll train some models to tackle the MNLI (Multi-Genre Natural Language Inferen
 task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
 
 ```
- @unpublished{wang2018glue
-     title = {{GLUE}: A Multi-Task Benchmark and Analysis Platform for
-              Natural Language Understanding}
-     author = {Wang, Alex and Singh, Amanpreet and Michael, Julian and Hill,
-               Felix and Levy, Omer and Bowman, Samuel R.}
-     note = {arXiv preprint 1804.07461}
-     year = {2018}
- }
- 
- @inproceedings{williams2018mnli,
-     author = "Williams, Adina and Nangia, Nikita and Bowman, Samuel",
-     title = "A Broad-Coverage Challenge Corpus for 
-              Sentence Understanding through Inference",
-     booktitle = "Proceedings of the 2018 Conference of the North American
-                  Chapter of the  Association for Computational Linguistics:
-                  Human Language Technologies, Volume 1 (Long Papers)",
-     year = "2018",
-     publisher = "Association for Computational Linguistics",
-     pages = "1112--1122",
-     location = "New Orleans, Louisiana",
-     url = "http://aclweb.org/anthology/N18-1101"
- }
+@InProceedings{conneau2017infersent,
+  author    = {Conneau, Alexis  and  Kiela, Douwe  and  Schwenk, Holger  and  Barrault, Lo\"{i}c  and  Bordes, Antoine},
+  title     = {Supervised Learning of Universal Sentence Representations from Natural Language Inference Data},
+  booktitle = {Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing},
+  month     = {September},
+  year      = {2017},
+  address   = {Copenhagen, Denmark},
+  publisher = {Association for Computational Linguistics},
+  pages     = {670--680},
+  url       = {https://www.aclweb.org/anthology/D17-1070}
+}
 ```
 
 ## 1. Setting up the tutorial

@@ -28,6 +28,8 @@ Worksheets organize and present an experimental pipeline in a comprehensible way
 
 As an example, the figure below shows an abstract dependency graph over four bundles in the center. On the side are two separate worksheets, which contain both text and pointers to various bundles. Worksheet 1 might be Percy's worksheet where he is running experiments for his own project, while Worksheet 2 might be Kerem's project where he compares Percy's project (bundle 0x19) against someone else's (bundle 0xe1).  
 
+<img src="https://github.com/codalab/codalab-worksheets/wiki/images/worksheets-schema.png" />
+
 CodaLab's philosophy is to give you full control of how you want to run your experiments and get out of your way, while providing a platform where you can easily keep track of the experiments that you've ran. You should be able to use the same tools, programming languages, and shell scripts that you do during your normal workflow. A good analogy is Git, which just maintains the revision history and gives you total freedom in terms of what to put in your repository.
 
 # Account Creation / Installation

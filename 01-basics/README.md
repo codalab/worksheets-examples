@@ -1,4 +1,4 @@
-# Tutorial 1: CodaLab Basics with GLUE Benchmarks
+# Tutorial 1: CodaLab Basics
 
 --------------------------------------------------------------------------------
 
@@ -84,9 +84,12 @@ to run experiments:
 - We're going use pretrained GloVe vectors from a public worksheet titled
   `word-vectors`. To search for this worksheet, type `wsearch word-vectors` in the
   online console, and click on the bundle with the UUID of `0xc946df`. It should take you
-  to [this worksheet](https://worksheets.codalab.org/worksheets/0xc946dfbd2215486493672a5e5b0c88d8/),
+  to the ["Pretrained Word Vectors" worksheet](https://worksheets.codalab.org/worksheets/0xc946dfbd2215486493672a5e5b0c88d8/),
   where you can see the various data bundles with common word vector datasets.
-- 
+- Add this bundle to our worksheet by running (**TODO**):
+  ```
+  cl add bundle main::word-vectors//glove.840B.300d main::<username>-01-basics
+  ```
 - Later, we'll be able to directly *depend on* bundles from this worksheet to
   run our code.
 
@@ -94,13 +97,21 @@ to run experiments:
 
 ### 3.1 Upload a bundle with code
 
--
+- We're now going to upload our code:
+  ```
+  cl upload src/ -d "Infersent source code from (Conneau et al. 2017)."
+  ```
 
 ### 3.2 Use a run script for convenience
 
 - It's possible to manually call `cl run` for each run you want to make. But in practice,
   many researchers use a *run script* to speed things up and avoid repition / mistakes.
-- Check out the provided [run.sh](./run.sh) which we will use to run our commands.
+- Check out the provided [run.sh](./run.sh) which we will use to assemble our commands.
+- Now, let's run actually run our code!
+  ```
+  bash train.sh
+  ```
+- Go to the online worksheet, and track the progress of your run.
 
 ### 3.3 Use JSON to easily display results
 
@@ -108,9 +119,8 @@ to run experiments:
   a *run bundle* is created that stores the files that were created, as well ast
   standard out/err.
 - But there are some special formats in which you can output your results so that you can easily
-  display them in the worksheet. We're going to set up JSON output.
-- Notice that our code in [main.py](01-glue/main.py#L1-5) outputs its results in a file
-  called `results.json`. Currently, the JSON file has the following shape (**TODO**):
+  display them in the worksheet. In this case, we've set up JSON output for our results.
+- Notice that the run bundle outputs its results in a file called `results.json` with the following shape (**TODO**):
   ```json
   {
       train_acc: number,
@@ -134,7 +144,17 @@ to run experiments:
 
 ### 4.1 Run with different parameters
 
-- TODO: Edit run script
+- In your local environment, change the parameters of your run by updating the main run command in
+  `train.sh` to the following:
+  ```
+  CMD="$CMD 'python src/train_nli.py \
+           --word_emb_path datasets/GloVe/glove.840B.300d.txt \
+           --encoder_type LSTMEncoder
+           --train_frac 0.1'"
+  ```
+  Feel free to change other parameters to try to improve the model accuracy. Look at `src/train_nli.py` for
+  a list of possible pararameters to change.
+- Then, run `train.sh` again and see the results in the worksheet.
 
 ### 4.1 Run with different code
 
@@ -142,4 +162,11 @@ to run experiments:
 
 ## 5. Share your results
 
-- TODO: Change permissions
+- When you are done adding to your worksheet and making it look nice, you're ready to share it with
+  the world.
+- In the online interface for the worksheet, you should see that the permissions are set to
+  `permissions: you(all) public(read)`.
+  This means that you can just share the URL of your worksheet, and the public will be able to see it.
+  It's that simple!
+
+**Congratulations**, you're done with the "Codalab Basics" tutorial!

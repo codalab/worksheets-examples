@@ -8,6 +8,7 @@
 import os
 import sys
 import time
+import json
 import argparse
 import numpy as np
 from tqdm import tqdm
@@ -283,18 +284,26 @@ def evaluate(epoch, eval_type='dev', final_eval=False):
 Train model on Natural Language Inference task
 """
 epoch = 1
-
+train_acc = 0
 while not stop_training and epoch <= params.n_epochs:
     train_acc = train_epoch(epoch)
-    eval_acc = evaluate(epoch, 'dev')
+    evaluate(epoch, 'dev')
     epoch += 1
 
 # Run best model on test set.
 nli_net.load_state_dict(torch.load(os.path.join(params.outputdir, params.outputmodelname)))
 
 print('\nTEST : Epoch {0}'.format(epoch))
-evaluate(0, 'dev', True)
-evaluate(0, 'test', True)
+dev_acc = evaluate(0, 'dev', True)
+test_acc = evaluate(0, 'test', True)
+
+# Output json results
+with open(os.path.join(params.outputdir, 'results.json'), 'w') as fout:
+    fout.write(json.dumps({
+        "train_acc": train_acc,
+        "dev_acc": dev_acc,
+        "test_acc": test_acc,
+    }))
 
 # Save encoder instead of full model
 torch.save(nli_net.encoder.state_dict(), os.path.join(params.outputdir, params.outputmodelname + '.encoder.pkl'))

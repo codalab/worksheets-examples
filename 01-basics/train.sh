@@ -7,7 +7,9 @@ CMD='cl run'
 CMD="$CMD :src :dataset"
 
 # The command you actually run
-CMD="$CMD 'python src/main.py --input dataset --eta 0234'"
+CMD="$CMD 'python infersent/train_nli.py \
+           --word_emb_path datasets/GloVe/glove.840B.300d.txt \
+           --train_frac 0.1'"
 
 echo $CMD
 exec $CMD

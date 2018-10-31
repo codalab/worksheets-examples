@@ -7,8 +7,7 @@
 This tutorial provides an overview of how to set up CodaLab and use it for
 performing experiments and sharing results.
 
-We'll train some models to tackle the MNLI (Multi-Genre Natural Language Inference) 
-task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
+We'll train some models to tackle the SNLI (Stanford Natural Language Inference) task from:
 
 ```
 @InProceedings{conneau2017infersent,
@@ -24,7 +23,10 @@ task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
 }
 ```
 
-## 1. Setting up the tutorial
+The source code in this tutorial has been adapted from the real research repo, found at:
+[facebookresearch/InferSent](https://github.com/facebookresearch/InferSent).
+
+## 1. Setting up
 
 ### 1.1 Create a new worksheet
 
@@ -33,7 +35,7 @@ task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
 - After signing in, click "My Dashboard". On this screen, you can see summary of the
   bundles and worksheets you create.
 - We're going to create a new worksheet to track our results from this tutorial,
-  so click "New Worksheet" and name it something like `<username>-tutorial-01`.
+  so click "New Worksheet" and name it something like `<username>-01-basics`.
 
 ### 1.2 Install the CLI tool
 
@@ -42,8 +44,7 @@ task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
 - Make sure you have the necessary dependencies (Python 2.7, setuptools, virtualenv, fuse).
 - Install the CLI by running:
   ```
-    pip install codalabworker
-    pip install codalab
+  pip install codalab
   ```
   You should now be able to use the `cl` command in your terminal.
 - Initialize the CLI by running:
@@ -53,31 +54,30 @@ task, drawn from the GLUE (General Language Understanding Evaluation) benchmark:
   Log in with your CodaLab account username and password.
 - Switch the current worksheet context to the new worksheet you created:
   ```
-  cl work main::<username>-tutorial-01
+  cl work main::<username>-01-basics
   ```
   
 ### 1.3 Initialize the environment and data
   
-  - Navigate to the `01-glue/` directory and run `bash ./setup.sh`. This script will:
+  - Navigate to the `01-basics/` directory and run `bash ./setup.sh`. This script will:
       - create a virtual environment `venv` for this tutorial
-      - download the MNLI dataset (~312 MB zipped) into a subdirectory called `data/`
-      - create `experiments/` directory for saving results
+      - download the SNLI dataset (~69 MB unzipped) into `datasets/`
   - Activate the virtual environment: `source venv/bin/activate`
 
 ## 2. Working with datasets
 
-### 2.2 Upload a data bundle
+### 2.1 Upload a bundle with data
 
 - One option for working with datasets is to upload your own.
-- Since `data/MNLI` is already prepared for you, we can upload it so that we can later use it
+- Since `datasets/SNLI` has been prepared for you, we can upload it so that we can later use it
 to run experiments:
   ```
-  cl upload data/MNLI -d "Multi-Genre Natural Language Inference dataset from (Williams et al. 2016)."
+  cl upload datasets/SNLI -d "Stanford Natural Language Inference dataset from (Bowman et al. 2015)."
   ```
 - Let's see this bundle in the online worksheet. Go to "My Dashboard" and click on the
-  tutorial for this worksheet. You should be able to see the new data bundle in the sheet.
+  tutorial for this worksheet. You should be able to see the new data bundle in the worksheet.
 
-### 2.3 Use an existing data bundle
+### 2.2 Use an existing data bundle
 
 - Another option for working with datasets is to use an existing public dataset that others
   have shared.
@@ -86,26 +86,35 @@ to run experiments:
   online console, and click on the bundle with the UUID of `0xc946df`. It should take you
   to [this worksheet](https://worksheets.codalab.org/worksheets/0xc946dfbd2215486493672a5e5b0c88d8/),
   where you can see the various data bundles with common word vector datasets.
+- 
 - Later, we'll be able to directly *depend on* bundles from this worksheet to
   run our code.
 
-## 3. Writing your code
+## 3. Running your code
 
-### 3.1 Use JSON to easily display results
+### 3.1 Upload a bundle with code
+
+-
+
+### 3.2 Use a run script for convenience
+
+- It's possible to manually call `cl run` for each run you want to make. But in practice,
+  many researchers use a *run script* to speed things up and avoid repition / mistakes.
+- Check out the provided [run.sh](./run.sh) which we will use to run our commands.
+
+### 3.3 Use JSON to easily display results
 
 - CodaLab allows you to work with all kinds of files and formats. When you execute a run,
   a *run bundle* is created that stores the files that were created, as well ast
   standard out/err.
-- But there are some special formats that you can output your results in order to easily
+- But there are some special formats in which you can output your results so that you can easily
   display them in the worksheet. We're going to set up JSON output.
 - Notice that our code in [main.py](01-glue/main.py#L1-5) outputs its results in a file
   called `results.json`. Currently, the JSON file has the following shape (**TODO**):
   ```json
   {
-      train_accuracy: number,
-      train_F1: number,
-      dev_accuracy: number,
-      dev_F1: number
+      train_acc: number,
+      dev_acc: number,
   }
   ```
 - We'll be able to use *directives* to automatically add these results to a table in our
@@ -117,27 +126,19 @@ to run experiments:
   % schema simple1
   % add uuid uuid [0:8]
   % add name
-  % add train_accuracy /output/results.json:train_accuracy
-  % add train_F1 /output/results.json:train_F1
-  % add dev_accuracy /output/results.json:dev_accuracy
-  % add dev_F1 /output/results.json:dev_F1
+  % add train_accuracy /output/results.json:train_acc
+  % add dev_accuracy /output/results.json:dev_acc
   ```
 
-### 3.2 Use a run script for convenience
+## 4. Performing experiments
 
-- It's possible to manually call `cl run` for each run you want to make. But in practice,
-  many researchers use a *run script* to speed things up and avoid repition / mistakes.
-- Check out the provided [run.sh](./run.sh) which we will use to run our commands.
+### 4.1 Run with different parameters
 
-## 4. Running on CodaLab
+- TODO: Edit run script
 
-### 4.1 Run an experiment
+### 4.1 Run with different code
 
-- TODO: Use run script
-
-### 4.2. Run another experiment
-
-- TODO: Make changes, run again
+- TODO: Change model
 
 ## 5. Share your results
 

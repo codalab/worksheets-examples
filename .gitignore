@@ -1,7 +1,3 @@
-# datasets
-*/dataset/SNLI
-*/dataset/GloVe
-
 # virtualenv
 */venv/
 

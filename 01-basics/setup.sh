@@ -5,5 +5,5 @@ pip install -U pip setuptools
 pip install -r requirements.txt
 
 printf "Downloading datasets...\n"
-cd infersent/dataset/
+cd datasets/
 bash get_datasets.sh

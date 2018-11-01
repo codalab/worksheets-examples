@@ -5,11 +5,11 @@
 3.  A verification email will be sent to the email address you used to sign up. When you open it, there will be a link to follow in order to verify your account.
 4.  After verifying your account, sign in again. This will bring you to "My Dashboard". This is a **special, read-only worksheet** that contains an overview of your activity and documents on Codalab. You can get back to this page at any time by clicking the "My Dashboard" button in the top-right.
 
-![Dashboard screenshot](https://raw.githubusercontent.com/codalab/worksheets-examples/glue-tutorial/00-quickstart/dashboard.png)
+![Dashboard](./dashboard.png)
 
 5.  Click on the "My Home" button in the top right. This will bring you to your **home worksheet**. This worksheet is yours to customize, and has a name with format "home-<your username>".
 
-![Dashboard screenshot](https://raw.githubusercontent.com/codalab/worksheets-examples/glue-tutorial/00-quickstart/home.png)
+![My Home](./home.png)
 
 Next, we will install the CodaLab CLI. You can do this by running the following commands in your command line (assuming python and pip are installed).
 

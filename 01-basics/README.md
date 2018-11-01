@@ -137,9 +137,18 @@ to run experiments:
   % schema infersent
   % add uuid uuid [0:8]
   % add name
-  % add train_accuracy /output/results.json:train_acc
-  % add dev_accuracy /output/results.json:dev_acc
+  % add train_accuracy /experiments/results.json:train_acc %.3f
+  % add dev_accuracy /experiments/results.json:dev_acc %.3f
+  % add test_accuracy /experiments/results.json:test_acc %.3f
   ```
+- Split up the `[dataset] ...` bundles from the `[run] ...` bundle.
+- Then just add the following directly above the run bundle:
+  ```
+  % display table infersent
+  ```
+- Also, feel free to add titles and descriptions in Markdown, to make a worksheet like the following:
+
+  ![Worksheet](./worksheet.png)
 
 ## 4. Performing experiments
 
@@ -159,7 +168,7 @@ to run experiments:
 
 ### 4.1 Run with different code
 
-- TODO: Change model
+- We'll 
 
 ## 5. Share your results
 

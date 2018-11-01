@@ -1,8 +1,6 @@
 # Tutorial: Natural Language Inference
 
---------------------------------------------------------------------------------
-
-**Estimated Time:** 30 minutes
+**Estimated time:** 30 minutes
 
 This tutorial shows you how to use CodaLab to run and manage your experimental
 development cycle on a real natural language processing task.
@@ -56,7 +54,7 @@ from the CLI, but the web interface offers a more graphical view of what's happe
 
 ## 2. Data and code
 
-### 2.1 Upload the SNLI dataset
+### 2.1. Upload the SNLI dataset
 
 Normally, you would have a dataset lying around, but for the purposes of the tutorial,
 we'll download one (SNLI) and put it in the `SNLI` directory on your local disk (~69 MB unzipped):
@@ -77,7 +75,7 @@ can be added later, but it's good style to document your bundles):
 
 Refresh the web interface (shift-R) to see this new bundle appear on the worksheet.
 
-### 2.2 Use existing word vectors
+### 2.2. Use existing word vectors
 
 We also want to use pre-trained word vectors for our experiments, but
 these can be quite large (~5 GB).  Fortunately, CodaLab allows you to leverage
@@ -91,7 +89,7 @@ simply contain pointers to bundles).  For this tutorial, let's add the
 
 Refresh the web interface (shift-R) to see this bundle appear.
 
-### 2.3 Upload the code
+### 2.3. Upload the code
 
 Now, we upload the code, which is in the `src` directory.  This code is a
 minor modification of
@@ -120,7 +118,7 @@ bundle for your code (e.g., `src`).
 Now we get to the fun part: actually running the code on the data that we've
 uploaded.
 
-### 3.2 Run script
+### 3.2. Run script
 
 While it is possible to invoke `cl run` directly from the shell, but in practice,
 command-line arguments get long and become hard to remember, so we recommend
@@ -157,7 +155,7 @@ By default, referring to a bundle by name `run-train` will grab the last bundle
 with that name, though it is always possible to refer to a bundle uniquely
 using the uuid.
 
-### 3.3 Monitoring your runs
+### 3.3. Monitoring your runs
 
 While you can look at the output files of each run individually, when you have
 10+ runs going at once, it is convenient to display a table summarizing the
@@ -232,7 +230,7 @@ experiment.  CodaLab allows one to *mount* any bundle so that it appears on
 your filesystem as a read-only directory.  Then you can just go into that
 directory and visualize things or run a plotting script.
 
-### 3.4 Modify the code
+### 3.4. Modify the code and re-run
 
 Now you will typically enter a development cycle where you modify your code and re-run experiments.
 Go ahead and do this (e.g., TODO).  Every time you do this, you will upload

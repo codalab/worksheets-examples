@@ -1,6 +1,13 @@
-# Account Creation / Installation
+# Tutorial: Quickstart
 
-1.  Go to http://worksheets.codalab.org, and click "Sign Up" in the top-right corner:
+**Estimated time:** 15 minutes
+
+In this tutorial, you will create a CodaLab account, install the CodaLab CLI,
+upload some code and data, and run your first experiment.
+
+## 1. Create an account
+
+1.  Go to [http://worksheets.codalab.org](http://worksheets.codalab.org) and click "Sign Up" in the top-right corner.
 2.  Fill out the subsequent form, and then submit the form using the "Sign Up" bottom in the bottom of the screen.
 3.  A verification email will be sent to the email address you used to sign up. When you open it, there will be a link to follow in order to verify your account.
 4.  After verifying your account, sign in again. This will bring you to "My Dashboard". This is a **special, read-only worksheet** that contains an overview of your activity and documents on Codalab. You can get back to this page at any time by clicking the "My Dashboard" button in the top-right.

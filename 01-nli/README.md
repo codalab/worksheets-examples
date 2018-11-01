@@ -243,7 +243,8 @@ run your experiment(s):
     $ cl upload src
     $ ./train.sh
 
-Go ahead and do this now. For instance, you can change within `src/models.py`:
+Go ahead and do this now. For instance, you can add another layer to the
+`ConvNetEncoder` within `src/models.py`:
 
 ```python
 class ConvNetEncoder(nn.Module):

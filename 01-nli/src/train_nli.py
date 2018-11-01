@@ -146,13 +146,12 @@ adam_stop = False
 stop_training = False
 lr = optim_params['lr'] if 'sgd' in params.optimizer else None
 
-def train_epoch(epoch):
+def train_epoch(epoch, log):
     run_info.update_stats({'epoch': epoch})
 
     print('\nTRAINING : Epoch ' + str(epoch))
     nli_net.train()
     all_costs = []
-    log = []
     words_count = 0
 
     last_time = time.time()
@@ -226,6 +225,7 @@ def train_epoch(epoch):
                 'sentences_per_second': sentences_per_second,
                 'words_per_second': words_per_second,
                 'train_accuracy': train_accuracy,
+                'epoch': epoch,
             }
             print('example {0:d} ; loss {1:4.2f} ; sentence/s {2:3.1f} ; words/s {3:3.1f} ; accuracy train : {4:4.2f}'.format(
                 stats['example'],
@@ -248,7 +248,7 @@ def train_epoch(epoch):
     print('results : epoch {0} ; mean accuracy train : {1:4.2f}'
           .format(epoch, train_acc))
     assert isinstance(train_acc, float)
-    return train_acc
+    return train_acc, log
 
 
 def evaluate(epoch, eval_type='dev', final_eval=False):
@@ -312,9 +312,10 @@ Train model on Natural Language Inference task
 """
 epoch = 0
 train_acc = 0
+log = []
 while not stop_training and epoch < params.n_epochs:
     epoch += 1
-    train_acc = train_epoch(epoch)
+    train_acc, log = train_epoch(epoch, log)
     evaluate(epoch, 'dev')
 
 # Run best model on test set.

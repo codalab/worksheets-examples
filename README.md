@@ -9,6 +9,6 @@ To follow along, clone this repository:
   Read about the high-level motivation of CodaLab and what are the key concepts (bundles and worksheets).
 - [Quickstart](00-quickstart/README.md):
   Get your hands dirty by creating an account, installing the CodaLab CLI, uploading some data/code, and running your first experiment.
-- [SNLI](01-snli/README.md):
+- [Natural language inference](01-nli/README.md):
   Run real NLP experiments (natural language inference) using CodaLab,
   and learn about the best practices for how you can incorporate CodaLab into your daily research workflow.

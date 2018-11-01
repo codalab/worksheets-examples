@@ -1,9 +1,12 @@
 # CodaLab Worksheets: Tutorials & Examples
 
-This repo contains tutorials and examples to get you up and rolling
-with conducting experiments and sharing results with CodaLab Worksheets.
+This repo contains tutorials and examples to get you up and rolling with conducting experiments and sharing results with CodaLab Worksheets.
 
-What problems does CodaLab try to solve?
+You can get started with the tutorial by cloning the repository: 
+
+    git clone https://github.com/codalab/worksheets-examples
+
+Please watch this video to understand the problems that CodaLab seeks to solve:
 https://www.youtube.com/watch?v=WwFGfgf3-5s
 
 # Overview
@@ -35,56 +38,10 @@ As an example, the figure below shows an abstract dependency graph over four bun
 
 CodaLab's philosophy is to give you full control of how you want to run your experiments and get out of your way, while providing a platform where you can easily keep track of the experiments that you've ran. You should be able to use the same tools, programming languages, and shell scripts that you do during your normal workflow. A good analogy is Git, which just maintains the revision history and gives you total freedom in terms of what to put in your repository.
 
-# Account Creation / Installation
-
-1.  Go to http://worksheets.codalab.org, and click "Sign Up" in the top-right corner:
-2.  Fill out the subsequent form, and then submit the form using the "Sign Up" bottom in the bottom of the screen.
-3.  A verification email will be sent to the email address you used to sign up. When you open it, there will be a link to follow in order to verify your account.
-4.  After verifying your account, sign in again. This will bring you to "My Dashboard". This is a **special, read-only worksheet** that contains an overview of your activity and documents on Codalab. You can get back to this page at any time by clicking the "My Dashboard" button in the top-right.
-
-![Dashboard screenshot](https://raw.githubusercontent.com/codalab/worksheets-examples/glue-tutorial/00-quickstart/img/dashboard.png)
-
-5.  Click on the "My Home" button in the top right. This will bring you to your **home worksheet**. This worksheet is yours to customize, and has a name with format "home-<your username>".
-
-![Dashboard screenshot](https://raw.githubusercontent.com/codalab/worksheets-examples/glue-tutorial/00-quickstart/img/home.png)
-
-Next, we will install the CodaLab CLI. You can do this by running the following commands in your command line (assuming python and pip are installed).
-
-    pip install codalab --user -U
-
-Alternatively you can ssh into the cluster, where the CodaLab CLI should already be installed.
-
-# Quickstart
-
-The following command will prompt you for your user name and password into CodaLab, as well as
-
-    cl work
-
-    mkdir data
-    mkdir code
-
-Create a file `data/lines.txt` with the following contents:
-
-    my
-    first
-    tutorial
-
-And a file `code/sort.py` with the following contents:
-
-    import sys
-    for line in sorted(sys.stdin.readlines()):
-    	print line,
-
-The following commands will zip up your directories and upload them to CodaLab, with bundle names "simple-data" and "simple-code" respectively.
-
-    cl upload data --name "simple-data"
-    cl upload code --name "simple-code"
-
-
-
-    cl run :simple-data :simple-code "python code/sort.py << data/lines.txt"
 
 ## Table of Contents
 
-1.  [CodaLab Basics](01-basics/README.md) -
+0.  [Quickstart](00-quickstart/README.md) -
+    Learn the basics of the CodaLab workflow of uploading files and executing code on CodaLab. 
+1.  [Workflow Basics](01-basics/README.md) -
     Familiarize yourself with the CodaLab workflow by runing some simple experiments using the SNLI dataset.

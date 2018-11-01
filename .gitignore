@@ -1,0 +1,17 @@
+# virtualenv
+*/venv/
+
+# editor
+.idea/*
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# log files
+*.log
+*.txt
+
+# pickle files
+*.pkl

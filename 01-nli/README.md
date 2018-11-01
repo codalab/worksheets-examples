@@ -1,11 +1,12 @@
-# Tutorial 01: Natural Language Inference
+# Tutorial: Natural Language Inference
 
 --------------------------------------------------------------------------------
 
 **Estimated Time:** 30 minutes
 
-This tutorial provides a realistic example of how to use CodaLab to run
-eperiments on a natural language processing task.
+This tutorial shows you how to use CodaLab to run and manage your experimental
+development cycle on a real natural language processing task.
+
 In particular, we will focus on the task of *natural language inference*,
 where given two sentences A and B, the goal is to determine whether A entails
 B, A contradicts B, or A is neutral with respect to B.  For example, the
@@ -15,16 +16,18 @@ following two sentences are contradictory:
 >
 > B: A man is driving down a lonely road.
 
-We will running [Facebook Research's InferSent](https://github.com/facebookresearch/InferSent) model on the
-[Stanford Natural Language Inference (SNLI)](https://nlp.stanford.edu/projects/snli/) dataset.
+We will run [Facebook Research's
+InferSent](https://github.com/facebookresearch/InferSent) model on the
+[Stanford Natural Language Inference
+(SNLI)](https://nlp.stanford.edu/projects/snli/) dataset.
 
 ## 1. Setup
 
 We assume you have already created a CodaLab account and installed the CodaLab CLI.
-If not, go through [00-quickstart](https://github.com/codalab/worksheets-examples/blob/master/00-quickstart/README.md) first.
+If not, go through [the quickstart](https://github.com/codalab/worksheets-examples/blob/master/00-quickstart/README.md) first.
 
 In what follows, `<username>` will stand for your CodaLab username (e.g.,
-pliang).
+`<username>-nli` means `pliang-nli` if you are `pliang`).
 
 **Create a new worksheet.**
 Create a new worksheet for this tutorial called `<username>-nli`:
@@ -32,12 +35,13 @@ Create a new worksheet for this tutorial called `<username>-nli`:
         $ cl new <username>-nli
         0x1c511a83993e4602860f207b6c3bd75e
 
-Worksheets are like Jupyter notebooks.  For every project, I typically make a
-new worksheet every few weeks, which acts like my research log.
+Worksheets are similar to Jupyter notebooks.  For every project, I typically make a
+new worksheet every few weeks, which acts like my research log that I append to
+for that time period.
 
 **Switch to the worksheet.**
-The CLI has a current worksheet (like a working directory).  Change it to be
-the worksheet you just created:
+The CLI keeps track of a current worksheet (like a working directory).  Change
+it to the worksheet you just created:
 
         $ cl work <username>-nli
         Switched to worksheet https://worksheets.codalab.org::pliang-nli(0x1c511a83993e4602860f207b6c3bd75e).
@@ -48,7 +52,7 @@ Locally, make sure you stay in the `01-nli` directory for the rest of this tutor
 
 In the [web interface](https://worksheets.codalab.org), click "My Dashboard" in
 the upper right, click on the `<username>-nli` worksheet.  We will do most things
-from the CLI, but this will offer a more graphical view of what's happening.
+from the CLI, but the web interface offers a more graphical view of what's happening.
 
 ## 2. Data and code
 
@@ -62,7 +66,8 @@ we'll download one (SNLI) and put it in the `SNLI` directory on your local disk 
         ...
         Splitting SNLI dataset...
 
-Now upload the `SNLI` dataset to CodaLab:
+Now upload this `SNLI` dataset to CodaLab (the description `-d` is optional and
+can be added later, but it's good style to document your bundles):
 
         $ cl upload SNLI -d "Stanford Natural Language Inference (SNLI) dataset (Bowman et al. 2015)"
         Preparing upload archive...
@@ -74,10 +79,12 @@ Refresh the web interface (shift-R) to see this new bundle appear on the workshe
 
 ### 2.2 Use existing word vectors
 
-We also want to leverage pre-trained word vectors, but these can be quite large (~5
-GB).  Fortunately, CodaLab allows you to leverage existing bundles directly on
-CodaLab.  You can simply add any bundle that exists on CodaLab to your worksheet (remember that worksheets
-simply contain pointers to bundles).  For this tutorial, let's add the GloVe word vectors from the
+We also want to use pre-trained word vectors for our experiments, but
+these can be quite large (~5 GB).  Fortunately, CodaLab allows you to leverage
+existing bundles that have already been uploaded to CodaLab.
+You can simply add any bundle that exists on CodaLab to your worksheet (remember that worksheets
+simply contain pointers to bundles).  For this tutorial, let's add the
+[GloVe](https://nlp.stanford.edu/projects/glove/) word vectors from the
 [word-vectors](https://worksheets.codalab.org/worksheets/0xc946dfbd2215486493672a5e5b0c88d8/) worksheet:
 
         $ cl add bundle word-vectors//glove.840B.300d .
@@ -86,7 +93,9 @@ Refresh the web interface (shift-R) to see this bundle appear.
 
 ### 2.3 Upload the code
 
-Now, upload the code, which is in the `src` directory:
+Now, we upload the code, which is in the `src` directory.  This code is a
+minor modification of
+[InferSent](https://github.com/facebookresearch/InferSent) to have additional logging.
 
         $ cl upload src -d "Facebook InferSent code (Conneau et al. 2017)"
         Preparing upload archive...
@@ -94,79 +103,114 @@ Now, upload the code, which is in the `src` directory:
         Sent 0.05MiB [0.12MiB/sec]
         0x366e790ab6ba4a728fd32b551a17d555
 
-Refresh the web interface (shift-R), and you should see three bundles now:
+Refresh the web interface (shift-R), and you should see three bundles now, the
+SNLI dataset, the word vectors, and the code:
 
 ![Uploaded bundles](images/uploaded-bundles.png)
 
-**Summary.**  In general, you should try to keep your local directory (probably
-from Git) and your CodaLab worksheet in sync.  Unlike Git, you have to group
-your files into bundles, which should not be too big or small.  A good rule of
-thumb is to have one or more dataset bundles (e.g., `SNLI`) and a bundle for
-your code (e.g., `src`).
+**Summary.**  In general, you should try to keep your local working directory
+(`01-nli` in this case) and your CodaLab worksheet (`<username>-nli`) in sync.
+Unlike Git, you have to organize
+your files into directories and upload them into bundles.  A good rule of
+thumb is to have one (or more) dataset bundles (e.g., `SNLI`) and a single
+bundle for your code (e.g., `src`).
 
 ## 3. Running experiments
 
-Now we get to the fun part: actually running experiments.
+Now we get to the fun part: actually running the code on the data that we've
+uploaded.
 
 ### 3.2 Run script
 
-While it is possible to directly invoke `cl run` from the command-line, but in practice,
-command-line arguments get long and hard to remember, so we recommend that you use
-a *run script* which you can invoke easily.
+While it is possible to invoke `cl run` directly from the shell, but in practice,
+command-line arguments get long and become hard to remember, so we recommend
+that you use a *run script* which you can invoke and change easily.
 
-For the tutorial, we have provided a [train.sh](./train.sh) script that you can invoke simply as follows:
+For the tutorial, we have provided a [train.sh](./train.sh) script that you can
+invoke simply as follows:
 
         $ ./train.sh
         cl run --request-docker-image codalab/default-gpu --request-gpus 1 :src :SNLI word-vectors.txt:glove.840B.300d 'python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3'
         0x813d9d14e50f41a192778462bf30cbaf
 
-This creates a CodaLab bundle, which will be run asynchronously.
-Refresh the web interface (shift-R), and you should see that your training run
+This creates a CodaLab bundle, which will be run asynchronously on a worker somewhere.
+Refresh the web interface (shift-R), and you should see your training run bundle (`run-train`)
 should be going.  You can inspect the stdout and various other information
 about the run in the side panel.
 It's `state` should go from `created` to `staged` (waiting for a worker) to
 `preparing` (downloading files to worker) to `running` (actually running the
-job) to `ready` (finished!).  This should all take less than 5 minutes.
+job on the worker) to `finalizing` (uploading results from the worker) to
+`ready` (finished!).  This should all take less than 5 minutes.
+
+If your bundle is stuck in `staged` for a long time, this could be because you requested
+more resources than any worker has, or there are no workers available,
+or the workers might be down for some reason.  If you feel like there is a problem,
+email support from the worksheet by clicking the "?" icon in the lower right of
+the web interface.
 
 You can go and start another training run, which should run in parallel:
 
-        $ ./train.sh --train_frac 0.3
+        $ ./train.sh --train_frac 0.2
+
+Note that this run will have the same name.  Names do not have to be unique.
+By default, referring to a bundle by name `run-train` will grab the last bundle
+with that name, though it is always possible to refer to a bundle uniquely
+using the uuid.
 
 ### 3.3 Monitoring your runs
 
 While you can look at the output files of each run individually, when you have
 10+ runs going at once, it is convenient to display a table summarizing the
-results.  The InferSent code has been modified to create two JSON files:
+results.  The InferSent code has been modified to output two JSON files:
 `args.json`, which contains the command-line flags to the run (e.g.,
-`train_frac`) and `stats.json`, which contains key statistics (e.g., accuracy).
+`train_frac`) and `stats.json`, which contains key statistics (e.g., accuracy),
+which are output as the run continues.
 
 For example, this is what the `args.json` looks like:
 
-And this is what the `stats.json` looks like:
+		{
+			"n_enc_layers": 1, 
+			"word_emb_dim": 300, 
+			"word_emb_path": "word-vectors.txt", 
+			...
+		}
 
+This is what the `stats.json` looks like:
 
-We can ask CodaLab to display this information for each run by creating a table  *schema*.
-In the web interface, click "Edit Source" and paste the following at the top of the worksheet:
+		{
+			"epoch": 3, 
+			"example": 51136
+			"loss": 1.097785596847534, 
+			"train_accuracy": 37.0, 
+			"dev_accuracy": 39.13838650680756, 
+			"test_accuracy": 39.80048859934853, 
+			"sentences_per_second": 2061.0820971673384, 
+			"words_per_second": 119996.1259894223, 
+		}
+
+We can ask CodaLab to display this information for each run by creating a custom table *schema*.
+In the web interface, click "Edit Source" and paste the following at the top of the worksheet
 (read more on [schemas](https://github.com/codalab/codalab-worksheets/wiki/Worksheet-Markdown#schemas)):
 
-        % schema run
-        % add uuid uuid [0:8]
-        % add name
-        % add epoch /stats.json:epoch
-        % add #epochs /args.json:n_epochs
-        % add train_frac /args.json:train_frac
-        % add example /stats.json:example
-        % add train_accuracy /stats.json:train_accuracy %.3f
-        % add test_accuracy /stats.json:test_accuracy %.3f
-        % add time time duration
-        % add state
-        % add description
+				% schema run
+				% add uuid uuid '[0:8]'
+				% add name
+				% add epoch /stats.json:epoch %d
+				% add '#epochs' /args.json:n_epochs %d
+				% add train_frac /args.json:train_frac %s
+				% add example /stats.json:example %d
+				% add train_accuracy /stats.json:train_accuracy %.1f
+				% add test_accuracy /stats.json:test_accuracy %.1f
+				% add time time duration
+				% add state
+				% add description
 
-This tells CodaLab which columns to show for the schema `run` (you can name it anything you want).
+This tells CodaLab to create the above table columns when you activate the
+schema `run` (you can use any name you want).
 Now we can apply the `run` schema to certain bundles by putting the `% display
 table run` directive right before the desired bundles.
 
-Your markdown should look like this:
+Click "Edit Source" to make your markdown look like this:
 
         [dataset SNLI]{0xda98c1500d044b32820173c162f63656}
         [dataset glove.840B.300d]{0x58947c280ae341b9b270fcc2173dc951}
@@ -179,7 +223,7 @@ Your markdown should look like this:
 
 If you hit "Save", your worksheet should look like this:
 
-TODO
+![Training runs](images/run-train.png)
 
 **Mounting.**
 While one can view all the results in the browser, sometimes it can be
@@ -190,11 +234,14 @@ directory and visualize things or run a plotting script.
 
 ### 3.4 Modify the code
 
-Now you will typically enter a development cycle where you modify your code and re-run experiments.  Every time you do this,
-you will upload your code and run your experiment(s):
+Now you will typically enter a development cycle where you modify your code and re-run experiments.
+Go ahead and do this (e.g., TODO).  Every time you do this, you will upload
+your code and run your experiment(s):
 
         $ cl upload src
         $ ./train.sh
+
+You can delete any runs you don't want by right clicking the bundle in the table.
 
 ## 4. Share your results
 

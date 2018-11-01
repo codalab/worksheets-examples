@@ -15,13 +15,13 @@ Dashboard". This is a **special, read-only worksheet** that contains an
 overview of your bundles and worksheets. You can get back to this
 page at any time by clicking the "My Dashboard" button in the top-right.
 
-![Dashboard](./dashboard.png)
+![Dashboard](images/dashboard.png)
 
 5.  Click on the "My Home" button in the top right. This will bring you to your
 **home worksheet** (called `home-<username>`). This worksheet is yours to
 customize.
 
-![My Home](./home.png)
+![My Home](images/home.png)
 
 ## 2. Install the CLI
 
@@ -68,9 +68,11 @@ In our example, the `data` and `code` directories have the following contents:
 
 `data/lines.txt`:
 
-    my
-    first
-    tutorial
+    e
+    d
+    c
+    b
+    a
 
 `code/sort.py`
 

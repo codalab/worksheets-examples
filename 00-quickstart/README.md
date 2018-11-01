@@ -118,4 +118,4 @@ In the web interface, you can see the run going:
 ![Run](images/run.png)
 
 Congratulations, you just created your first experiment in CodaLab!
-To do a real NLP task, go to the [next tutorial](01-nli).
+To do a real NLP task, go to the [next tutorial](../01-nli).

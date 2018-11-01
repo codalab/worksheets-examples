@@ -23,6 +23,7 @@ InferSent](https://github.com/facebookresearch/InferSent) model on the
 
 We assume you have already created a CodaLab account and installed the CodaLab CLI.
 If not, go through [the quickstart](https://github.com/codalab/worksheets-examples/blob/master/00-quickstart/README.md) first.
+We also assume that you are using Python 2 as default (or are working in a virtualenv with Python 2)*[]:
 
 In what follows, `<username>` will stand for your CodaLab username (e.g.,
 `<username>-nli` means `pliang-nli` if you are `pliang`).
@@ -129,7 +130,7 @@ invoke simply as follows:
 
     $ ./train.sh
     cl run --request-docker-image codalab/default-gpu --request-gpus 1 :src :SNLI word-vectors.txt:glove.840B.300d 'python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3'
-    0x813d9d14e50f41a192778462bf30cbaf
+    0xc0e39088294943d2b22feb9a7f6b7212
 
 This creates a CodaLab bundle, which will be run asynchronously on a worker somewhere.
 Refresh the web interface (shift-R), and you should see your training run bundle (`run-train`)
@@ -149,6 +150,8 @@ the web interface.
 You can go and start another training run, which should run in parallel:
 
     $ ./train.sh --train_frac 0.2
+    cl run --request-docker-image codalab/default-gpu --request-gpus 1 :src :SNLI word-vectors.txt:glove.840B.300d 'python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.2 --n_epochs 3'
+    0xd6b754041338498a835775a41a75b9ef
 
 Note that this run will have the same name.  Names do not have to be unique.
 By default, referring to a bundle by name `run-train` will grab the last bundle
@@ -215,9 +218,8 @@ Click "Edit Source" to make your markdown look like this:
     [dataset src]{0xa0293ba9a5da4e9ca5b84823ec8d5842}
 
     % display table run
-    [run run-python -- :src,:SNLI,word-vectors.txt:glove.840B.300d : python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3 ]{0x0e0deaa314dc49d89ba0210888eb560d}
-    [run run-python -- :src,:SNLI,word-vectors.txt:glove.840B.300d : python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3]{0x813d9d14e50f41a192778462bf30cbaf}
-    [run run-python -- :src,:SNLI,word-vectors.txt:glove.840B.300d : python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3 --train_frac 0.5]{0x252467fc25324e94bfd34b5dd2ebe2d4}
+    [run run-python -- :src,:SNLI,word-vectors.txt:glove.840B.300d : python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3 ]{0xc0e39088294943d2b22feb9a7f6b7212}
+    [run run-python -- :src,:SNLI,word-vectors.txt:glove.840B.300d : python src/train_nli.py --nlipath SNLI --word_emb_path word-vectors.txt --train_frac 0.1 --n_epochs 3 --train_frac 0.2]{0xd6b754041338498a835775a41a75b9ef}
 
 If you hit "Save", your worksheet should look like this:
 
@@ -233,13 +235,38 @@ directory and visualize things or run a plotting script.
 ### 3.4. Modify the code and re-run
 
 Now you will typically enter a development cycle where you modify your code and re-run experiments.
-Go ahead and do this (e.g., TODO).  Every time you do this, you will upload
-your code and run your experiment(s):
+
+Every time you make changes, you will upload your code and run your experiment(s):
 
     $ cl upload src
     $ ./train.sh
 
 You can delete any runs you don't want by right clicking the bundle in the table.
+
+Go ahead and do this now. For instance, you can change within `src/models.py`:
+
+```python
+class ConvNetEncoder(nn.Module):
+    def __init__(self, config):
+        ...
+        self.convnet5 = nn.Sequential(
+            nn.Conv1d(2*self.enc_lstm_dim, 2*self.enc_lstm_dim, kernel_size=3,
+                      stride=1, padding=1),
+            nn.ReLU(inplace=True),
+            )
+    def forward(self, sent_tuple):
+        ...
+        sent = self.convnet5(sent)
+        u5 = torch.max(sent, 2)[0]
+
+        emb = torch.cat((u1, u2, u3, u4, u5), 1)
+        return emb
+```
+
+Then, just upload and run your code:
+
+    $ cl upload src
+    $ ./train.sh --encoder_type ConvNetEncoder
 
 ## 4. Share your results
 
@@ -247,7 +274,7 @@ By default, worksheets are public to the world.  In the web interface, you can
 see this as `permissions: you(all) public(read)`.  So in order to share a worksheet,
 you just need to send people the link to either a worksheet or a bundle or a
 particular file in a bundle.  The fact that bundle UUIDs (e.g.,
-0x1c511a83993e4602860f207b6c3bd75e) are stable means that you can point people
+0xa0293ba9a5da4e9ca5b84823ec8d5842) are stable means that you can point people
 to things in CodaLab.
 
 **Congratulations** on running your first real experiment in CodaLab!  You can

@@ -15,3 +15,7 @@ __pycache__/
 
 # pickle files
 *.pkl
+
+# special dirs
+*/datasets/*
+*/experiments/*

@@ -23,7 +23,7 @@ InferSent](https://github.com/facebookresearch/InferSent) model on the
 
 We assume you have already created a CodaLab account and installed the CodaLab CLI.
 If not, go through [the quickstart](https://github.com/codalab/worksheets-examples/blob/master/00-quickstart/README.md) first.
-We also assume that you are using Python 2 as default (or are working in a virtualenv with Python 2)*[]:
+We also assume that you are using Python 2 as default (or are working in a virtualenv with Python 2).
 
 In what follows, `<username>` will stand for your CodaLab username (e.g.,
 `<username>-nli` means `pliang-nli` if you are `pliang`).
@@ -196,6 +196,7 @@ In the web interface, click "Edit Source" and paste the following at the top of 
     % schema run
     % add uuid uuid '[0:8]'
     % add name
+    % add encoder /args.json:encoder_type %s
     % add epoch /stats.json:epoch %d
     % add '#epochs' /args.json:n_epochs %d
     % add train_frac /args.json:train_frac %s

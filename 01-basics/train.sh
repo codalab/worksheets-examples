@@ -1,18 +1,24 @@
-CMD='cl run'
+# TODO: add brief description
 
-# Docker image
-# CMD="$CMD --request-docker-image "
+### CodaLab arguments
+CODALAB_ARGS="cl run"
 
-# Dependencies
-CMD="$CMD :src :dataset"
+# Docker image (default: codalab/default-cpu)
+CODALAB_ARGS="$CODALAB_ARGS --request-docker-image codalab/default-gpu"
+CODALAB_ARGS="$CODALAB_ARGS --request-gpus 1"
 
-# Main command
-CMD="$CMD 'python src/train_nli.py \
-           --word_emb_path datasets/GloVe/glove.840B.300d.txt \
-           --train_frac 0.1'"
+# Bundle dependencies
+CODALAB_ARGS="$CODALAB_ARGS :src"                              # Code
+CODALAB_ARGS="$CODALAB_ARGS :SNLI"                             # Dataset
+CODALAB_ARGS="$CODALAB_ARGS word-vectors.txt:glove.840B.300d"  # Word vectors
 
-# Run configuration
-CMD="$CMD --request-gpus 1"
+### Command to execute
+CMD="python src/train_nli.py"
+CMD="$CMD --nlipath SNLI"
+CMD="$CMD --train_frac 0.1"
+#CMD="$CMD --word_emb_path word-vectors.txt"
 
-echo $CMD
-exec $CMD
+# Run it!
+FINAL_COMMAND="$CODALAB_ARGS '$CMD'"
+echo $FINAL_COMMAND
+exec bash -c "$FINAL_COMMAND"

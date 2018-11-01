@@ -74,7 +74,7 @@ The following commands will zip up each directory and upload them as bundles, wi
 ## Running a worksheet
 Here, we're going to execute our sorting code on the `lines.txt` file. We'll mount the `quickstart-data` and `quickstart-code` bundles as dependencies, by prepending a colon before them. Dependencies are mounted onto the root of the file system with their bundle name. We again use the `-n` parameter to name the bundle that represents this run. 
 
-    worksheets-examples/00-quickstart$ cl run :quickstart-data :quickstart-code "python quickstart-code/sort.py << quickstart-data/lines.txt" -n sorted
+    worksheets-examples/00-quickstart$ cl run :quickstart-data :quickstart-code "python quickstart-code/sort.py < quickstart-data/lines.txt" -n sorted
     0xea46dbb112444eb1aba285623cbe433f
 
 To see the output of the bundle after you run it, you can see the files within the bundle with `cl cat <bundle_name>`, and the standard output with `cl cat <bundle_name>/stdout`. 

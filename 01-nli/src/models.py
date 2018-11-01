@@ -720,7 +720,6 @@ class ConvNetEncoder(nn.Module):
         u4 = torch.max(sent, 2)[0]
 
         emb = torch.cat((u1, u2, u3, u4), 1)
-
         return emb
 
 

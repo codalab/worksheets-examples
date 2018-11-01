@@ -244,7 +244,8 @@ run your experiment(s):
     $ cl upload src
     $ ./train.sh
 
-Go ahead and do this now. For instance, you can change within `src/models.py`:
+Go ahead and do this now. For example, you can add another layer to the
+`ConvNetEncoder` in `src/models.py`(lines 666+):
 
 ```python
 class ConvNetEncoder(nn.Module):
@@ -262,6 +263,16 @@ class ConvNetEncoder(nn.Module):
 
         emb = torch.cat((u1, u2, u3, u4, u5), 1)
         return emb
+```
+
+Don't forget to increase the (unfortunately hard coded) encoding dimension in `src/models.py`(line ~753 now):
+
+```python
+class NLINet(nn.Module)
+    def __init__(self, config):
+    ...
+    self.inputdim = 5*self.inputdim if self.encoder_type in \ # Make it 5 instead of 4
+    ...
 ```
 
 Then, just upload and run your code:

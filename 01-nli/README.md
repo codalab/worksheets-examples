@@ -168,42 +168,42 @@ which are output as the run continues.
 
 For example, this is what the `args.json` looks like:
 
-		{
-			"n_enc_layers": 1, 
-			"word_emb_dim": 300, 
-			"word_emb_path": "word-vectors.txt", 
-			...
-		}
+    {
+      "n_enc_layers": 1,
+      "word_emb_dim": 300,
+      "word_emb_path": "word-vectors.txt",
+      ...
+    }
 
 This is what the `stats.json` looks like:
 
-		{
-			"epoch": 3, 
-			"example": 51136
-			"loss": 1.097785596847534, 
-			"train_accuracy": 37.0, 
-			"dev_accuracy": 39.13838650680756, 
-			"test_accuracy": 39.80048859934853, 
-			"sentences_per_second": 2061.0820971673384, 
-			"words_per_second": 119996.1259894223, 
-		}
+    {
+      "epoch": 3,
+      "example": 51136
+      "loss": 1.097785596847534,
+      "train_accuracy": 37.0,
+      "dev_accuracy": 39.13838650680756,
+      "test_accuracy": 39.80048859934853,
+      "sentences_per_second": 2061.0820971673384,
+      "words_per_second": 119996.1259894223,
+    }
 
 We can ask CodaLab to display this information for each run by creating a custom table *schema*.
 In the web interface, click "Edit Source" and paste the following at the top of the worksheet
 (read more on [schemas](https://github.com/codalab/codalab-worksheets/wiki/Worksheet-Markdown#schemas)):
 
-				% schema run
-				% add uuid uuid '[0:8]'
-				% add name
-				% add epoch /stats.json:epoch %d
-				% add '#epochs' /args.json:n_epochs %d
-				% add train_frac /args.json:train_frac %s
-				% add example /stats.json:example %d
-				% add train_accuracy /stats.json:train_accuracy %.1f
-				% add test_accuracy /stats.json:test_accuracy %.1f
-				% add time time duration
-				% add state
-				% add description
+        % schema run
+        % add uuid uuid '[0:8]'
+        % add name
+        % add epoch /stats.json:epoch %d
+        % add '#epochs' /args.json:n_epochs %d
+        % add train_frac /args.json:train_frac %s
+        % add example /stats.json:example %d
+        % add train_accuracy /stats.json:train_accuracy %.1f
+        % add test_accuracy /stats.json:test_accuracy %.1f
+        % add time time duration
+        % add state
+        % add description
 
 This tells CodaLab to create the above table columns when you activate the
 schema `run` (you can use any name you want).

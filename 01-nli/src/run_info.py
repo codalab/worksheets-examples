@@ -20,6 +20,7 @@ class RunInfo(object):
     def __init__(self, base_path):
         self.base_path = base_path
         self.stats = {}
+        self.log = {}
 
     def write_args(self, args):
         """
@@ -35,3 +36,11 @@ class RunInfo(object):
         self.stats = merge(self.stats, new_stats)
         with open(os.path.join(self.base_path, 'stats.json'), 'w') as f:
             print(json.dumps(self.stats, indent=2), file=f)
+
+    def update_log(self, new_log):
+        """
+        Recursively merge `new_log` and write it out to a file.
+        """
+        self.log = merge(self.log, new_log)
+        with open(os.path.join(self.base_path, 'log.json'), 'w') as f:
+            print(json.dumps(self.log, indent=2), file=f)

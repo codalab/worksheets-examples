@@ -16,7 +16,7 @@ CODALAB_ARGS="$CODALAB_ARGS --request-gpus 1"
 # Control the amount of RAM your run needs
 #CODALAB_ARGS="$CODALAB_ARGS --request-memory 5g"
 # Kill job after this many days (default: 1 day)
-CODALAB_ARGS="$CODALAB_ARGS --request-time 10d"
+CODALAB_ARGS="$CODALAB_ARGS --request-time 2d"
 
 # Bundle dependencies
 CODALAB_ARGS="$CODALAB_ARGS :src"                              # Code

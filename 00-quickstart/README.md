@@ -79,12 +79,12 @@ Here, we're going to execute our sorting code on the `lines.txt` file. We'll mou
 
 To see the output of the bundle after you run it, you can see the files within the bundle with `cl cat <bundle_name>`, and the standard output with `cl cat <bundle_name>/stdout`. 
 
-    > cl cat sorted
+    worksheets-examples/00-quickstart cl cat sorted
     name    perm  size
     ------------------
     stderr  0644     0
     stdout  0644    18
-    CodaLab> cl cat sorted/stdout
+    worksheets-examples/00-quickstart cl cat sorted/stdout
     first
     my
     tutorial

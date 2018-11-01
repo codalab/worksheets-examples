@@ -35,7 +35,7 @@ Open a terminal and run the following:
 
 *Note.*  The CLI only works with Python 2.7 right now, so if Python 3 is your default, you can install CodaLab into a virtual environment:
 
-    $ virtualenv venv
+    $ virtualenv -p python2.7 venv
     Running virtualenv with interpreter /usr/bin/python2
     ...
     $ . venv/bin/activate

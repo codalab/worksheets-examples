@@ -1,4 +1,4 @@
-# Tutorial 1: CodaLab Basics
+# Tutorial 1: Workflow Basics
 
 --------------------------------------------------------------------------------
 
@@ -170,4 +170,4 @@ to run experiments:
   This means that you can just share the URL of your worksheet, and the public will be able to see it.
   It's that simple!
 
-**Congratulations**, you're done with the "Codalab Basics" tutorial!
+**Congratulations**, you're done with the "Workflow Basics" tutorial!

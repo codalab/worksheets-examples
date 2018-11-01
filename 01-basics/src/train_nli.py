@@ -11,7 +11,6 @@ import time
 import json
 import argparse
 import numpy as np
-from tqdm import tqdm
 
 import torch
 from torch.autograd import Variable
@@ -30,7 +29,7 @@ parser.add_argument("--outputmodelname", type=str, default='model.pickle')
 parser.add_argument("--word_emb_path", type=str, default="datasets/GloVe/glove.840B.300d.txt", help="word embedding file path")
 
 # training
-parser.add_argument("--n_epochs", type=int, default=3)
+parser.add_argument("--n_epochs", type=int, default=20)
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--dpout_model", type=float, default=0., help="encoder dropout")
 parser.add_argument("--dpout_fc", type=float, default=0., help="classifier dropout")
@@ -164,7 +163,7 @@ def train_epoch(epoch):
         and 'sgd' in params.optimizer else optimizer.param_groups[0]['lr']
     print('Learning rate : {0}'.format(optimizer.param_groups[0]['lr']))
 
-    for stidx in tqdm(range(0, len(s1), params.batch_size)):
+    for stidx in range(0, len(s1), params.batch_size):
         # prepare batch
         s1_batch, s1_len = get_batch(s1[stidx:stidx + params.batch_size],
                                      word_vec, params.word_emb_dim)
@@ -219,9 +218,10 @@ def train_epoch(epoch):
             last_time = time.time()
             words_count = 0
             all_costs = []
-    train_acc = 100 * correct/len(s1)
+    train_acc = 100 * float(correct)/len(s1)
     print('results : epoch {0} ; mean accuracy train : {1:4.2f}'
           .format(epoch, train_acc))
+    assert isinstance(train_acc, float)
     return train_acc
 
 
@@ -237,7 +237,7 @@ def evaluate(epoch, eval_type='dev', final_eval=False):
     s2 = dev['s2'] if eval_type == 'dev' else test['s2']
     target = dev['label'] if eval_type == 'dev' else test['label']
 
-    for i in tqdm(range(0, len(s1), params.batch_size)):
+    for i in range(0, len(s1), params.batch_size):
         # prepare batch
         s1_batch, s1_len = get_batch(s1[i:i + params.batch_size], word_vec, params.word_emb_dim)
         s2_batch, s2_len = get_batch(s2[i:i + params.batch_size], word_vec, params.word_emb_dim)
@@ -251,7 +251,7 @@ def evaluate(epoch, eval_type='dev', final_eval=False):
         correct += pred.long().eq(tgt_batch.data.long()).cpu().sum()
 
     # save model
-    eval_acc = 100 * correct / len(s1)
+    eval_acc = 100 * float(correct) / len(s1)
     if final_eval:
         print('finalgrep : accuracy {0} : {1:4.2f}%'.format(eval_type, eval_acc))
     else:
@@ -277,18 +277,19 @@ def evaluate(epoch, eval_type='dev', final_eval=False):
                 # early stopping (at 2nd decrease in accuracy)
                 stop_training = adam_stop
                 adam_stop = True
+    assert isinstance(eval_acc, float)
     return eval_acc
 
 
 """
 Train model on Natural Language Inference task
 """
-epoch = 1
+epoch = 0
 train_acc = 0
-while not stop_training and epoch <= params.n_epochs:
+while not stop_training and epoch < params.n_epochs:
+    epoch += 1
     train_acc = train_epoch(epoch)
     evaluate(epoch, 'dev')
-    epoch += 1
 
 # Run best model on test set.
 nli_net.load_state_dict(torch.load(os.path.join(params.outputdir, params.outputmodelname)))

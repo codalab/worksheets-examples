@@ -44,7 +44,7 @@ it to the worksheet you just created:
     $ cl work <username>-nli
     Switched to worksheet https://worksheets.codalab.org::pliang-nli(0x1c511a83993e4602860f207b6c3bd75e).
 
-Locally, make sure you stay in the `01-nli` directory for the rest of this tutorial:
+Locally, make sure you stay in the `worksheets-examples/01-nli` directory for the rest of this tutorial:
 
     $ cd 01-nli
 
@@ -153,7 +153,7 @@ You can go and start another training run, which should run in parallel:
 Note that this run will have the same name.  Names do not have to be unique.
 By default, referring to a bundle by name `run-train` will grab the last bundle
 with that name, though it is always possible to refer to a bundle uniquely
-using the uuid.
+using the UUID.
 
 ### 3.3. Monitoring your runs
 
@@ -246,7 +246,7 @@ You can delete any runs you don't want by right clicking the bundle in the table
 By default, worksheets are public to the world.  In the web interface, you can
 see this as `permissions: you(all) public(read)`.  So in order to share a worksheet,
 you just need to send people the link to either a worksheet or a bundle or a
-particular file in a bundle.  The fact that bundle uuids (e.g.,
+particular file in a bundle.  The fact that bundle UUIDs (e.g.,
 0x1c511a83993e4602860f207b6c3bd75e) are stable means that you can point people
 to things in CodaLab.
 

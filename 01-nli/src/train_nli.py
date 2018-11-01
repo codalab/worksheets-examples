@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+from __future__ import print_function
 import os
 import sys
 import time
@@ -19,7 +20,7 @@ import torch.nn as nn
 from data import get_nli, get_batch, build_vocab
 from mutils import get_optimizer
 from models import NLINet
-
+from run_info import RunInfo
 
 parser = argparse.ArgumentParser(description='NLI training')
 # paths
@@ -57,6 +58,10 @@ parser.add_argument("--seed", type=int, default=1234, help="seed")
 parser.add_argument("--word_emb_dim", type=int, default=300, help="word embedding dimension")
 
 params, _ = parser.parse_known_args()
+run_info = RunInfo(params.outputdir)
+
+# Write out command-line arguments
+run_info.write_args(params)
 
 # set gpu device
 USE_CUDA = torch.cuda.is_available()
@@ -95,7 +100,7 @@ MODEL
 """
 # model config
 config_nli_model = {
-    'n_words'        :  len(word_vec)          ,
+    'n_words'        :  len(word_vec)         ,
     'word_emb_dim'   :  params.word_emb_dim   ,
     'enc_lstm_dim'   :  params.enc_lstm_dim   ,
     'n_enc_layers'   :  params.n_enc_layers   ,
@@ -108,7 +113,6 @@ config_nli_model = {
     'nonlinear_fc'   :  params.nonlinear_fc   ,
     'encoder_type'   :  params.encoder_type   ,
     'use_cuda'       :  USE_CUDA              ,
-
 }
 
 # model
@@ -142,8 +146,9 @@ adam_stop = False
 stop_training = False
 lr = optim_params['lr'] if 'sgd' in params.optimizer else None
 
-
 def train_epoch(epoch):
+    run_info.update_stats({'epoch': epoch})
+
     print('\nTRAINING : Epoch ' + str(epoch))
     nli_net.train()
     all_costs = []
@@ -209,12 +214,27 @@ def train_epoch(epoch):
         optimizer.param_groups[0]['lr'] = current_lr
 
         if len(all_costs) == 100:
+            loss = np.mean(all_costs)
+            sentences_per_second = len(all_costs) * params.batch_size / (time.time() - last_time)
+            words_per_second = words_count * 1.0 / (time.time() - last_time)
+            train_accuracy = float(100.*correct/(stidx+k))
+
             logs.append('{0} ; loss {1} ; sentence/s {2} ; words/s {3} ; accuracy train : {4:4.2f}'.format(
-                            stidx, round(np.mean(all_costs), 2),
-                            int(len(all_costs) * params.batch_size / (time.time() - last_time)),
-                            int(words_count * 1.0 / (time.time() - last_time)),
-                            100.*correct/(stidx+k)))
+                            stidx, round(loss, 2),
+                            int(sentences_per_second),
+                            int(words_per_second),
+                            train_accuracy))
             print(logs[-1])
+
+            # Write out statistics
+            run_info.update_stats({
+                'example': stidx,
+                'loss': loss,
+                'sentences_per_second': sentences_per_second,
+                'words_per_second': words_per_second,
+                'train_accuracy': train_accuracy,
+            })
+
             last_time = time.time()
             words_count = 0
             all_costs = []
@@ -297,14 +317,10 @@ nli_net.load_state_dict(torch.load(os.path.join(params.outputdir, params.outputm
 print('\nTEST : Epoch {0}'.format(epoch))
 dev_acc = evaluate(0, 'dev', True)
 test_acc = evaluate(0, 'test', True)
-
-# Output json results
-with open(os.path.join(params.outputdir, 'results.json'), 'w') as fout:
-    fout.write(json.dumps({
-        "train_acc": train_acc,
-        "dev_acc": dev_acc,
-        "test_acc": test_acc,
-    }))
+run_info.update_stats({
+    'dev_accuracy': dev_acc,
+    'test_accuracy': test_acc,
+})
 
 # Save encoder instead of full model
 torch.save(nli_net.encoder.state_dict(), os.path.join(params.outputdir, params.outputmodelname + '.encoder.pkl'))

@@ -1,6 +1,0 @@
-# datasets
-datasets/SNLI/*
-datasets/GloVe/*
-
-# experiments
-experiments/*

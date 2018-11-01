@@ -235,6 +235,18 @@ experiment.  CodaLab allows one to *mount* any bundle so that it appears on
 your filesystem as a read-only directory.  Then you can just go into that
 directory and visualize things or run a plotting script.
 
+    $ mkdir run-train
+    $ cl mount run-train --mountpoint run-train &
+    BundleFUSE mounting bundle 0xc79873073b4e4cd7ae76a05714b19042 on /home/pliang/worksheets-examples/01-nli/run-train
+    BundleFUSE will run and maintain the mounted filesystem in the foreground. CTRL-C to cancel.
+
+You can now go into the directory and plot some training curves:
+
+    $ pip install matplotlib
+    $ python plot.py --logpath run-train/log.json
+
+When you're done, remember to unmount.
+
 ### 3.4. Modify the code and re-run
 
 Now you will typically enter a development cycle where you modify your code and

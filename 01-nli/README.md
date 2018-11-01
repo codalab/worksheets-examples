@@ -271,7 +271,7 @@ class NLINet(nn.Module)
     ...
     self.inputdim = 5*self.inputdim if self.encoder_type in \ # Make it 5 instead of 4
     ...
-  ```
+```
 
 Then, just upload and run your code:
 

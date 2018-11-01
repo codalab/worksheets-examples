@@ -10,9 +10,9 @@ where given two sentences A and B, the goal is to determine whether A entails
 B, A contradicts B, or A is neutral with respect to B.  For example, the
 following two sentences are contradictory:
 
-> A: A black race car starts up in front of a crowd of people.
+> A: The black racecar passes a crowd of people.
 >
-> B: A man is driving down a lonely road.
+> B: The vehicle drives down a lonely road.
 
 We will run [Facebook Research's
 InferSent](https://github.com/facebookresearch/InferSent) model on the
@@ -225,6 +225,8 @@ If you hit "Save", your worksheet should look like this:
 
 ![Training runs](images/run-train.png)
 
+You can delete any runs you don't want by right clicking the bundle in the table.
+
 **Mounting.**
 While one can view all the results in the browser, sometimes it can be
 convenient to be able to run custom scripts that plot the results of an
@@ -234,14 +236,12 @@ directory and visualize things or run a plotting script.
 
 ### 3.4. Modify the code and re-run
 
-Now you will typically enter a development cycle where you modify your code and re-run experiments.
-
-Every time you make changes, you will upload your code and run your experiment(s):
+Now you will typically enter a development cycle where you modify your code and
+re-run experiments. Every time you make changes, you will upload your code and
+run your experiment(s):
 
     $ cl upload src
     $ ./train.sh
-
-You can delete any runs you don't want by right clicking the bundle in the table.
 
 Go ahead and do this now. For instance, you can change within `src/models.py`:
 

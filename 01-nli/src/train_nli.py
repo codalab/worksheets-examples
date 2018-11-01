@@ -152,7 +152,7 @@ def train_epoch(epoch):
     print('\nTRAINING : Epoch ' + str(epoch))
     nli_net.train()
     all_costs = []
-    logs = []
+    log = []
     words_count = 0
 
     last_time = time.time()
@@ -219,26 +219,32 @@ def train_epoch(epoch):
             words_per_second = words_count * 1.0 / (time.time() - last_time)
             train_accuracy = float(100.*correct/(stidx+k))
 
-            logs.append('{0} ; loss {1} ; sentence/s {2} ; words/s {3} ; accuracy train : {4:4.2f}'.format(
-                            stidx, round(loss, 2),
-                            int(sentences_per_second),
-                            int(words_per_second),
-                            train_accuracy))
-            print(logs[-1])
-
             # Write out statistics
-            run_info.update_stats({
+            stats = {
                 'example': stidx,
                 'loss': loss,
                 'sentences_per_second': sentences_per_second,
                 'words_per_second': words_per_second,
                 'train_accuracy': train_accuracy,
+            }
+            print('example {0:d} ; loss {1:4.2f} ; sentence/s {2:3.1f} ; words/s {3:3.1f} ; accuracy train : {4:4.2f}'.format(
+                stats['example'],
+                stats['loss'],
+                stats['sentences_per_second'],
+                stats['words_per_second'],
+                stats['train_accuracy'],
+            ))
+            run_info.update_stats(stats)
+
+            log.append(stats)
+            run_info.update_log({
+                'log': log,
             })
 
             last_time = time.time()
             words_count = 0
             all_costs = []
-    train_acc = 100 * float(correct)/len(s1)
+    train_acc = 100. * float(correct)/len(s1)
     print('results : epoch {0} ; mean accuracy train : {1:4.2f}'
           .format(epoch, train_acc))
     assert isinstance(train_acc, float)

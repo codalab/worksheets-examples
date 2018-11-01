@@ -88,7 +88,7 @@ to run experiments:
   where you can see the various data bundles with common word vector datasets.
 - Add this bundle to our worksheet by running (**TODO**):
   ```
-  cl add bundle main::word-vectors//glove.840B.300d main::<username>-01-basics
+  cl add bundle word-vectors//glove.840B.300d .
   ```
 - Later, we'll be able to directly *depend on* bundles from this worksheet to
   run our code.
@@ -125,6 +125,7 @@ to run experiments:
   {
       train_acc: number,
       dev_acc: number,
+      test_acc: number,
   }
   ```
 - We'll be able to use *directives* to automatically add these results to a table in our
@@ -133,7 +134,7 @@ to run experiments:
   [Worksheet Markdown](https://github.com/codalab/codalab-worksheets/wiki/Worksheet-Markdown#directives)
 - In order to display the results from our run, paste the following schema in your worksheet:
   ```
-  % schema simple1
+  % schema infersent
   % add uuid uuid [0:8]
   % add name
   % add train_accuracy /output/results.json:train_acc

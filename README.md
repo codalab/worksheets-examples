@@ -86,6 +86,5 @@ The following commands will zip up your directories and upload them to CodaLab, 
 
 ## Table of Contents
 
-1.  [CodaLab Basics with GLUE Benchmarks](01-glue/GLUE-TUTORIAL.md) -
-    Run some basic experiments on the GLUE benchmark to develop your
-    CodaLab workflow.
+1.  [CodaLab Basics](01-basics/README.md) -
+    Familiarize yourself with the CodaLab workflow by runing some simple experiments using the SNLI dataset.

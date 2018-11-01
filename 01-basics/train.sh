@@ -1,4 +1,8 @@
-# TODO: add brief description
+# This is an example script to start a CodaLab run. There are often several
+# things to configure, including the docker image, compute resources, bundle
+# dependencies (code and data), and custom arguments to pass to the command.
+# Factoring all this into a script makes it easier to run and track different
+# configurations.
 
 ### CodaLab arguments
 CODALAB_ARGS="cl run"

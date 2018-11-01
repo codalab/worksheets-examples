@@ -51,7 +51,7 @@ parser.add_argument("--n_classes", type=int, default=3, help="entailment/neutral
 parser.add_argument("--pool_type", type=str, default='max', help="max or mean")
 
 # gpu
-parser.add_argument("--gpu_id", type=int, default=3, help="GPU ID")
+parser.add_argument("--gpu_id", type=int, default=0, help="GPU ID")
 parser.add_argument("--seed", type=int, default=1234, help="seed")
 
 # data

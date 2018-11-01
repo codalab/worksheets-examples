@@ -77,4 +77,14 @@ Here, we're going to execute our sorting code on the `lines.txt` file. We'll mou
     worksheets-examples/00-quickstart$ cl run :quickstart-data :quickstart-code "python quickstart-code/sort.py << quickstart-data/lines.txt" -n sorted
     0xea46dbb112444eb1aba285623cbe433f
 
-To see the output of the bundle after you run it, you can see the files within the bundle with `cl cat sorted`, and the standard output with `cl cat sorted/stdout`. 
+To see the output of the bundle after you run it, you can see the files within the bundle with `cl cat <bundle_name>`, and the standard output with `cl cat <bundle_name>/stdout`. 
+
+    > cl cat sorted
+    name    perm  size
+    ------------------
+    stderr  0644     0
+    stdout  0644    18
+    CodaLab> cl cat sorted/stdout
+    first
+    my
+    tutorial

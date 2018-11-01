@@ -27,22 +27,22 @@ Alternatively, if you are in the Stanford NLP group, you can ssh into the NLP cl
 
 First, navigate to the same directory as this README (`worksheets-examples/00-quickstart`). We'll be walking through using the basic CodaLab commands and their functionality. 
 
-`cl work` will prompt you for your user name and password into CodaLab, as well as tell you what your current working worksheet is. Below is the output for logging into the `test` account. 
+`cl work` will prompt you for your user name and password into CodaLab, as well as tell you what your current working worksheet is. Below is the output for logging into the `guest1` account. 
 
     worksheets-examples/00-quickstart$ cl work
     Requesting access at https://worksheets.codalab.org
-    Username: test
+    Username: guest1
     Password: 
-    Currently on worksheet https://worksheets.codalab.org::home-test(0x39729afdca6140869a11e055e4cc0649).
+    Currently on worksheet https://worksheets.codalab.org::home-guest1(0x39729afdca6140869a11e055e4cc0649).
 
 ## Setting up a worksheet
 
-Let's create a new worksheet called "quickstart-<username>", since worksheets must have a unique name. This will print out the UUID of the new worksheet. We can then make this new worksheet our current working worksheet. 
+Let's create a new worksheet called "<username>-quickstart", since worksheets must have a unique name. This will print out the UUID of the new worksheet. We can then make this new worksheet our current working worksheet. 
 
-    worksheets-examples/00-quickstart$ cl new quickstart-test
+    worksheets-examples/00-quickstart$ cl new guest1-quickstart
     0xd9975e25878346f8ac8d369e7e3153c9
-    worksheets-examples/00-quickstart$ cl work quickstart-test
-    Switched to worksheet https://worksheets.codalab.org::quickstart-test(0xd9975e25878346f8ac8d369e7e3153c9).
+    worksheets-examples/00-quickstart$ cl work guest1-quickstart
+    Switched to worksheet https://worksheets.codalab.org::guest1-quickstart(0xd9975e25878346f8ac8d369e7e3153c9).
 
 Next, we'll upload the `data` and `code` folders with the following contents, respectively:
 
@@ -58,23 +58,23 @@ Next, we'll upload the `data` and `code` folders with the following contents, re
     for line in sorted(sys.stdin.readlines()):
     	print line,
 
-The following commands will zip up each directory and upload them as bundles, with bundle names "simple-data" and "simple-code" respectively. `cl up` will zip up the directory, upload it to codalab, and then output the bundle's UUID. We use the `-n` parameter to specify a bundle name; if no name is specified, then the name of the bundle will be the name of the directory. 
+The following commands will zip up each directory and upload them as bundles. This will create new bundles with names "data" and "code" respectively. `cl up` will zip up the directory, upload it to codalab, and then output the bundle's UUID. We could use the `-n` parameter to specify a bundle name; however, since no name was specified, then the name of the bundle will be the name of the directory. 
 
-    worksheets-examples/00-quickstart$ cl up data -n quickstart-data
+    worksheets-examples/00-quickstart$ cl up data
     Preparing upload archive...
     Uploading data.tar.gz (0x47041bd9565941f38a001b705a90c502) to https://worksheets.codalab.org
     Sent 0.00MiB [0.00MiB/sec]              
     0x47041bd9565941f38a001b705a90c502
-    worksheets-examples/00-quickstart$ cl up code -n quickstart-code
+    worksheets-examples/00-quickstart$ cl up code
     Preparing upload archive...
     Uploading code.tar.gz (0xb536a6447bbe4ec797054d38667384ce) to https://worksheets.codalab.org
     Sent 0.00MiB [0.00MiB/sec]              
     0xb536a6447bbe4ec797054d38667384ce
 
 ## Running a worksheet
-Here, we're going to execute our sorting code on the `lines.txt` file. We'll mount the `quickstart-data` and `quickstart-code` bundles as dependencies, by prepending a colon before them. Dependencies are mounted onto the root of the file system with their bundle name. We again use the `-n` parameter to name the bundle that represents this run. 
+Here, we're going to execute our sorting code on the `lines.txt` file. We'll mount the `data` and `code` bundles as dependencies, by prepending a colon before them. Dependencies are mounted onto the root of the file system with their bundle name. We again use the `-n` parameter to name the bundle that represents this run. 
 
-    worksheets-examples/00-quickstart$ cl run :quickstart-data :quickstart-code "python quickstart-code/sort.py < quickstart-data/lines.txt" -n sorted
+    worksheets-examples/00-quickstart$ cl run :data :code "python code/sort.py < data/lines.txt" -n sorted
     0xea46dbb112444eb1aba285623cbe433f
 
 To see the output of the bundle after you run it, you can see the files within the bundle with `cl cat <bundle_name>`, and the standard output with `cl cat <bundle_name>/stdout`. 

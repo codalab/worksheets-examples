@@ -12,6 +12,10 @@ ZIPTOOL="unzip"
 #    ZIPTOOL="7za x"
 #fi
 
+if ! type $ZIPTOOL > /dev/null; then
+  echo "unzip must be installed. Please run 'apt-get install unzip' and try again."
+  exit 1
+fi
 
 ### download SNLI
 echo "Downloading SNLI dataset..."

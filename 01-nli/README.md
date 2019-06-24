@@ -86,7 +86,7 @@ simply contain pointers to bundles).  For this tutorial, let's add the
 [GloVe](https://nlp.stanford.edu/projects/glove/) word vectors from the
 [word-vectors](https://worksheets.codalab.org/worksheets/0xc946dfbd2215486493672a5e5b0c88d8/) worksheet:
 
-    $ cl add bundle word-vectors//glove.840B.300d .
+    $ cl add bundle word-vectors//glove.840B.300d
 
 Refresh the web interface (shift-R) to see this bundle appear.
 

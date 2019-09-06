@@ -28,15 +28,15 @@ customize.
 You can do many things from the web interface,
 but to be truly productive on CodaLab, you should install
 the CodaLab command-line interface (CLI).
-We assume you already have Python and pip installed.
+We assume you already have Python 3 (Python 2 is no longer supported) and pip installed.
 Open a terminal and run the following:
 
     $ pip install codalab -U --user
 
-*Note.*  The CLI only works with Python 2.7 right now, so if Python 3 is your default, you can install CodaLab into a virtual environment:
+Or if you'd rather install it in a virtualenv:
 
-    $ virtualenv -p python2.7 venv
-    Running virtualenv with interpreter /usr/bin/python2
+    $ virtualenv -p python3.6 venv
+    Running virtualenv with interpreter /usr/bin/python3.6
     ...
     $ . venv/bin/activate
     (venv) $ pip install codalab -U

@@ -23,7 +23,7 @@ InferSent](https://github.com/facebookresearch/InferSent) model on the
 
 We assume you have already created a CodaLab account and installed the CodaLab CLI.
 If not, go through [the quickstart](https://github.com/codalab/worksheets-examples/blob/master/00-quickstart/README.md) first.
-We also assume that you are using Python 2 as default (or are working in a virtualenv with Python 2).
+We also assume that you are using Python 3 as default (or are working in a virtualenv with Python 3).
 
 In what follows, `<username>` will stand for your CodaLab username (e.g.,
 `<username>-nli` means `pliang-nli` if you are `pliang`).
